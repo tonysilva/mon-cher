@@ -1,0 +1,39 @@
+<div class="profile">
+  <div class="row">
+    <div class="col-xs-4 col-sm-1">
+      <img ng-src="{{ profile.profileImageURL }}" class="prof-img" />
+    </div>
+    <div class="row">
+        <div class="col-sm-10">
+          <span class="name">
+            {{ profile.username }}
+          </span>
+        </div>
+        <div class="col-sm-10">
+          <span class="text-left">
+            {{ profile.email }}
+          </span>
+        </div>
+    </div>
+  </div><br />
+
+  <div class="panel panel-default">
+    <div class="panel-body  row" ng-repeat="(key,post) in posts">
+      <div class="col-xs-1">
+      </div>
+      <div class="col-md-11 col-xs-11">
+        <div class="info">
+          <a ng-href="{{ post.url }}">
+            {{ post.title }}
+            <span class="url">({{ post.url | hostnameFromUrl }})</span>
+          </a>
+        </div>
+        <div>
+          <a ng-href="#/posts/{{ post.$id }}">comments</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div><br />
+<a ng-href="#/posts">Back to Posts</a>
