@@ -12,7 +12,7 @@
 
 ## Usage
 
-Go to the [_Mon Cher_]() and try our service.
+Go to the [_Mon Cher_](https://mon-cher.github.io) and try our service.
 
 ## Build & development
 
@@ -24,4 +24,4 @@ Running `grunt test` will run the unit tests with karma.
 
 ## Contributing
 
-Any bugs about _Mon Cher_ please feel free to report [here]().
+Any bugs about _Mon Cher_ please feel free to report [here](https://github.com/tonysilva/mon-cher/issues).
