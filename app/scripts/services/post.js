@@ -9,7 +9,9 @@ app.factory('Post', function ($firebaseArray, $firebaseObject, FIREBASE_URL) {
     all: posts,
     create: function (post) {
       return posts.$add(post).then(function(postRef) {
-        ref.child("user_posts").child(post.creatorUID).push(postRef.key());
+        $firebaseArray(ref.child('user_posts').child(post.creatorUID)).$add(postRef.key()).then(function(userPostsRef) {
+          ref.child('posts').child(postRef.key()).child('userPostsID').set(userPostsRef.key());
+        });
         return postRef;
       });
     },
@@ -17,7 +19,9 @@ app.factory('Post', function ($firebaseArray, $firebaseObject, FIREBASE_URL) {
       return $firebaseObject(ref.child('posts').child(postId));
     },
     delete: function (post) {
-      return posts.$remove(post);
+      return posts.$remove(post).then(function() {
+        ref.child('user_posts').child(post.creatorUID).child(post.userPostsID).remove();
+      });
     },
     comments: function (postId) {
       return $firebaseArray(ref.child("comments").child(postId));
