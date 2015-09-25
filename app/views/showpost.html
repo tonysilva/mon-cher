@@ -16,6 +16,7 @@
             {{ post.creator }}
           </a>
         </span>
+        <a ng-click="deletePostView(post)" ng-show="user.uid === post.creatorUID">(delete)</a>
       </div>
     </div>
   </div>

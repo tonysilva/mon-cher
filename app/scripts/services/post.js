@@ -20,11 +20,20 @@ app.factory('Post', function ($firebaseArray, $firebaseObject, FIREBASE_URL) {
     },
     delete: function (post) {
       return posts.$remove(post).then(function() {
+        ref.child("comments").child(post.$id).remove();
         ref.child('user_posts').child(post.creatorUID).child(post.userPostsID).remove();
       });
     },
     comments: function (postId) {
       return $firebaseArray(ref.child("comments").child(postId));
+    },
+    deletePostView: function (post) {
+      var creatorUID = post.creatorUID;
+      var userPostsID = post.userPostsID;
+      return post.$remove().then(function() {
+        ref.child("comments").child(post.$id).remove();
+        ref.child('user_posts').child(creatorUID).child(userPostsID).remove(); 
+      });    
     }
   };
 
