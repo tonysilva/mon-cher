@@ -119,7 +119,7 @@ input#search {
 }
 
 @media(min-width: 768px) {
-  .cmt {
+  #line.cmt {
     display: none;
   }
 }
