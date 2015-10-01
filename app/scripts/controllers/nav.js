@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('NavCtrl', function ($scope, $location, Post, Auth) {
+app.controller('NavCtrl', function ($scope, $location, Post, Auth, Group) {
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
   $scope.user = Auth.user;
@@ -19,8 +19,16 @@ app.controller('NavCtrl', function ($scope, $location, Post, Auth) {
   };
 
   $scope.loadGroups = function () {
-    Post.groups($scope.user.uid).$loaded().then(function(groups) {
+    Group.groups($scope.user.uid).$loaded().then(function(groups) {
       $scope.groups = groups;
+    });
+  };
+
+  $scope.createGroup = function () {
+    $scope.group.profile = $scope.user.profile;
+    Group.create($scope.group).then(function() {
+      $location.path('/');
+      $scope.group = {};
     });
   };
 

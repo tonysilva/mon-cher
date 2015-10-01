@@ -34,10 +34,7 @@ app.factory('Post', function ($firebaseArray, $firebaseObject, FIREBASE_URL) {
         ref.child("comments").child(post.$id).remove();
         ref.child('user_posts').child(creatorUID).child(userPostsID).remove(); 
       });    
-    },
-    groups: function (userId) {
-      return $firebaseArray(ref.child("groups").child(userId));
-    } 
+    }
   };
 
   return Post;
