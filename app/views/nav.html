@@ -20,7 +20,7 @@
       <ul class="nav navbar-nav">
         <li id="nameapp"><a href="#/" class="font-moncher">Mon Cher <sup>beta</sup><span class="sr-only">(current)</span></a></li>
       </ul>
-      <div id="line" class="row cmt"></div>
+
       <form class="navbar-form navbar-left" role="search" ng-show="signedIn()">
         <div class="form-group input-group-sm">
           <input type="text" class="form-control" placeholder="Title" ng-model="post.title">
@@ -29,28 +29,18 @@
           <input type="text" class="form-control" placeholder="Link" ng-model="post.url">
         </div>
         <div class="btn-group btn-group-sm" role="group" aria-label="...">
-          <button type="submit" class="btn btn-default" ng-mousedown="loadGroups()" data-toggle="modal" data-target=".choosesubmit">Send</button>
+          <button type="submit" class="btn btn-default" ng-mousedown="loadGroups()" data-toggle="modal" data-target=".choosesubmit"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
         </div>
       </form>
       
-      <ul class="nav navbar-nav navbar-right" style="margin:0">
+      <ul class="nav navbar-nav navbar-right">
         <li ng-show="signedIn()">
-          <div class="btn-group profile-group">
-            <a class="btn btn-default nav-profile" ng-href="#/users/{{ user.uid }}">
-              <img ng-src="{{ user.profile.profileImageURL }}" class="nav-pic" />
-              {{ user.profile.username }}
-            </a>
-            <button type="button" class="btn btn-default dropdown-toggle nav-profile-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="caret"></span>
-              <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><a style="cursor:pointer" data-toggle="modal" data-target=".creategroup">New Group</a></li>
-              <li role="separator" class="divider"></li>
-              <li ng-show="signedIn()"><a ng-href="#" ng-click="logout()">Log Out</a></li>
-            </ul>
-          </div>
+          <a style="cursor:pointer" data-toggle="modal" data-target=".useraction">
+            <img ng-src="{{ user.profile.profileImageURL }}" class="nav-pic" />
+            {{ user.profile.username }}
+          </a>
         </li>
+        <div ng-hide="signedIn()" id="line" class="row cmt"></div>        
         <li ng-hide="signedIn()"><a href="#/login"><strong>Log In</strong></a></li>
         <li ng-hide="signedIn()"><a href="#/register">Sign Up for <strong>Mon Cher</strong></a></li>
       </ul>
@@ -68,7 +58,7 @@
           <form>
             <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-mousedown="submitPost()" style="width:100%">Public</button>
             <div ng-repeat="group in groups">
-              <button type="submit" class="btn btn-default" data-dismiss="modal" style="width:100%; margin-top:5px;">{{ group.name }}</button>
+              <button type="submit" class="btn btn-default buttonfull" data-dismiss="modal">{{ group.name }}</button>
             </div>
           </form>
         </div>
@@ -98,4 +88,28 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
+  <div class="useraction modal fade" tabindex="-1" role="dialog" aria-labelledby="useraction">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 id="useraction" class="modal-title">Actions</h4>
+        </div>
+        <div class="modal-body">
+          <a class="btn btn-default buttonfull custom-close" ng-href="#/users/{{ user.uid }}" role="button">My Profile</a>
+          <button type="submit" class="btn btn-default buttonfull" data-dismiss="modal" data-toggle="modal" data-target=".creategroup">New Group</button>  
+          <button type="submit" class="btn btn-primary buttonfull" data-dismiss="modal" ng-mousedown="logout()">Log Out</button>          
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
 </nav>
+
+<script type="text/javascript">
+  $(function () {
+    $(".custom-close").on('click', function() {
+        $('.useraction').modal('hide');
+    });
+  });
+</script>
