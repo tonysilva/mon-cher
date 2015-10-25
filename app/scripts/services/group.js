@@ -1,22 +1,26 @@
 'use strict';
 
-app.factory('Group', function ($firebaseArray, $firebaseObject, FIREBASE_URL) {
+app.factory('Group', function ($firebaseArray, $firebaseObject, FIREBASE_URL, Auth) {
   var ref = new Firebase(FIREBASE_URL);
-  var groupss = $firebaseArray(ref.child('groups'));
+  var groups = $firebaseArray(ref.child('groups'));
 
   var Group = {
-    all: groupss,
+    all: groups,
     create: function (group) {
-      return Group.groups(group.profile.$id).$add(group).then(function(groupRef) {
-        $firebaseArray(ref.child('profiles').child(group.profile.$id).child('groups')).$add(group);
+      var profile = Auth.user.profile;
+      delete profile.groups;
+      return groups.$add(group).then(function(groupRef) {
+        $firebaseArray(ref.child('groups').child(groupRef.key()).child('profiles')).$add(profile).then(function() {
+          return $firebaseArray(ref.child('profiles').child(profile.$id).child('groups')).$add(group);
+        });
         return groupRef;
       });
     },
-    get: function (userId, groupId) {
-      return $firebaseObject(ref.child("groups").child(userId).child(groupId));
+    get: function (groupId) {
+      return $firebaseObject(ref.child("groups").child(groupId));
     },
-    groups: function (userId) {
-      return $firebaseArray(ref.child("groups").child(userId));
+    getProfiles: function (groupId) {
+      return $firebaseArray(ref.child("groups").child(groupId).child("profiles"));
     }
   };
 
