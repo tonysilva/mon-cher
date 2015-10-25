@@ -19,13 +19,12 @@ app.controller('NavCtrl', function ($scope, $location, Post, Auth, Group) {
   };
 
   $scope.loadGroups = function () {
-    Group.groups($scope.user.uid).$loaded().then(function(groups) {
+    /*Group.groups($scope.user.uid).$loaded().then(function(groups) {
       $scope.groups = groups;
-    });
+    });*/
   };
 
   $scope.createGroup = function () {
-    $scope.group.profile = $scope.user.profile;
     Group.create($scope.group).then(function() {
       $location.path('/');
       $scope.group = {};
