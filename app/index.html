@@ -25,10 +25,6 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <!-- <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-      </div>
-    </div> -->
 
     <div ng-include="'views/nav.html'"></div>
 
@@ -71,6 +67,7 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/jquery.xdomainajax.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/posts.js"></script>
         <script src="scripts/controllers/postview.js"></script>

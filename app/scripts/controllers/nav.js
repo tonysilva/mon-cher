@@ -12,9 +12,19 @@ app.controller('NavCtrl', function ($scope, $location, Post, Auth, Group) {
   	$scope.post.creator = $scope.user.profile.username;
   	$scope.post.creatorUID = $scope.user.uid;
     $scope.post.date = new Date().toJSON();
-    Post.create($scope.post).then(function (ref) {
-      $location.path('/posts/' + ref.key());
-      $scope.post = {url: 'http://', title: ''};
+    
+    $.ajax({
+        url: $scope.post.url,
+        type: 'GET',
+        success: function(res) {
+          var xmlDoc = $.parseXML(res.responseText),
+            $xml = $(xmlDoc);
+          $scope.post.title = $xml.find("title").text();
+          Post.create($scope.post).then(function (ref) {
+            $location.path('/posts/' + ref.key());
+            $scope.post = {url: 'http://', title: ''};
+          });
+        }
     });
   };
 
