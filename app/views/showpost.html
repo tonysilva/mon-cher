@@ -15,8 +15,9 @@
           <a ng-href="#/users/{{ post.creatorUID }}">
             {{ post.creator }}
           </a>
-        </span>
-        <a ng-click="deletePostView(post)" ng-show="user.uid === post.creatorUID">(delete)</a>
+        </span> 
+        <span ng-show="user.uid === post.creatorUID">&mdash;</span>
+        <a ng-click="deletePostView(post)" ng-show="user.uid === post.creatorUID">delete</a>
       </div>
     </div>
   </div>
@@ -29,9 +30,10 @@
       <a ng-href="#/users/{{ comment.creatorUID }}">
         {{ comment.creator }}
       </a>
+      <span ng-show="signedIn() && comment.creatorUID === user.uid">&mdash;</span>
       <a ng-href="" ng-click="deleteComment(comment)" ng-show="signedIn() && comment.creatorUID === user.uid">
-		(delete)
-	</a>
+		    delete
+      </a>
     </p>
   </div>
 </div>

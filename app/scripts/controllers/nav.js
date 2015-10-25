@@ -16,6 +16,12 @@ app.controller('NavCtrl', function ($scope, $location, Post, Auth, Group) {
     $.ajax({
         url: $scope.post.url,
         type: 'GET',
+        beforeSend: function() {
+          $('#spinner').show();
+        },
+        complete: function() {
+          $('#spinner').hide();
+        },
         success: function(res) {
           var xmlDoc = $.parseXML(res.responseText),
             $xml = $(xmlDoc);
@@ -40,5 +46,20 @@ app.controller('NavCtrl', function ($scope, $location, Post, Auth, Group) {
       $scope.group = {};
     });
   };
+
+  var kkeys = [], konami = "38,38,40,40,37,39,37,39,66,65";
+  $(document).keydown(function(e) {
+    kkeys.push( e.keyCode );
+    if ( kkeys.toString().indexOf( konami ) >= 0 ){
+      $.getScript('/scripts/jquery.easteregg.min.js',function(){
+        $(document).easteregg({
+          sequence: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65], 
+          callback: function () {
+            $("body").append("<div class='eg'><img src='images/dv.gif'/></div>");
+          }
+        });
+      });
+    }
+  });
 
 });

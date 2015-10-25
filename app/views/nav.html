@@ -22,14 +22,14 @@
       </ul>
 
       <form class="navbar-form navbar-left" role="search" ng-show="signedIn()">
-        <div class="form-group input-group-sm">
+        <!-- <div class="form-group input-group-sm">
           <input type="text" class="form-control" placeholder="Title" ng-model="post.title">
-        </div>
+        </div> -->
         <div class="form-group input-group-sm">
-          <input type="text" class="form-control" placeholder="Link" ng-model="post.url">
+          <input type="text" class="form-control url-field" placeholder="Link" ng-model="post.url">
         </div>
         <div class="btn-group btn-group-sm" role="group" aria-label="...">
-          <button type="submit" class="btn btn-default" ng-mousedown="loadGroups()" data-toggle="modal" data-target=".choosesubmit"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+          <button type="submit" class="btn btn-default" ng-mousedown="loadGroups()" data-toggle="modal" data-target=".choosesubmit"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="left:1px"></span></button>
         </div>
       </form>
       
