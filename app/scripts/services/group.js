@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('Group', function ($firebaseArray, $firebaseObject, FIREBASE_URL, Auth) {
+app.factory('Group', function ($firebaseArray, $firebaseObject, $firebaseUtils, FIREBASE_URL, Auth) {
   var ref = new Firebase(FIREBASE_URL);
   var groups = $firebaseArray(ref.child('groups'));
 
@@ -10,9 +10,8 @@ app.factory('Group', function ($firebaseArray, $firebaseObject, FIREBASE_URL, Au
       var profile = Auth.user.profile;
       delete profile.groups;
       return groups.$add(group).then(function(groupRef) {
-        $firebaseArray(ref.child('groups').child(groupRef.key()).child('profiles')).$add(profile).then(function() {
-          return $firebaseArray(ref.child('profiles').child(profile.$id).child('groups')).$add(group);
-        });
+        ref.child('groups').child(groupRef.key()).child('profiles').child(profile.$id).set($firebaseUtils.toJSON(profile));
+        ref.child('profiles').child(profile.$id).child('groups').child(groupRef.key()).set(group);
         return groupRef;
       });
     },
@@ -21,6 +20,11 @@ app.factory('Group', function ($firebaseArray, $firebaseObject, FIREBASE_URL, Au
     },
     getProfiles: function (groupId) {
       return $firebaseArray(ref.child("groups").child(groupId).child("profiles"));
+    },
+    addPost: function (groupId, postId, post) {
+      delete post.group;
+      ref.child("groups").child(groupId).child("posts").child(postId).set(post);
+      ref.child("profiles").child(post.creatorUID).child("groups").child(groupId).child("posts").child(postId).set(post);
     }
   };
 

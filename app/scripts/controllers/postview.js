@@ -17,8 +17,9 @@ app.controller('PostViewCtrl', function ($scope, $routeParams, Post, Auth, $loca
       creator: $scope.user.profile.username,
       creatorUID: $scope.user.uid
     };
-    $scope.comments.$add(comment);
-
+    $scope.comments.$add(comment).then(function(commentRef) {
+      Post.addComment($scope.post, commentRef.key(), comment);
+    });
     $scope.commentText = '';
   };
 

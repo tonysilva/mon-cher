@@ -29,6 +29,9 @@
           </a>
         </div>
         <div>
+          <span ng-repeat="(key, group) in post.group">
+            <span><a ng-href="#/group/{{ key }}">{{ group.name }}</a> &mdash;</span>
+          </span>          
           <a ng-href="#/posts/{{ post.$id }}">comments</a>
         </div>
       </div>

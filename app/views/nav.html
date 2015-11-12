@@ -29,7 +29,7 @@
           <input type="text" class="form-control url-field" placeholder="Link" ng-model="post.url">
         </div>
         <div class="btn-group btn-group-sm" role="group" aria-label="...">
-          <button type="submit" class="btn btn-default" ng-mousedown="loadGroups()" data-toggle="modal" data-target=".choosesubmit"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="left:1px"></span></button>
+          <button type="submit" class="btn btn-default" data-toggle="modal" data-target=".choosesubmit"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="left:1px"></span></button>
         </div>
       </form>
       
@@ -57,8 +57,8 @@
         <div class="modal-body">
           <form>
             <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-mousedown="submitPost()" style="width:100%">Public</button>
-            <div ng-repeat="group in groups">
-              <button type="submit" class="btn btn-default buttonfull" data-dismiss="modal">{{ group.name }}</button>
+            <div ng-repeat="(key,group) in user.profile.groups">
+              <button type="submit" class="btn btn-default buttonfull" data-dismiss="modal" ng-mousedown="submitPost(key)">{{ group.name }}</button>
             </div>
           </form>
         </div>
@@ -74,15 +74,18 @@
           <h4 id="creategroup" class="modal-title">New Group</h4>
         </div>
         <div class="modal-body">
-          <form>
+          <form name="groupform">
             <div class="form-group input-group-sm">
-              <input type="text" class="form-control" placeholder="Name" ng-model="group.name">
+              <input type="text" class="form-control" placeholder="Name" ng-model="group.name"><br/>
+              <label>Select a picture for the group</label>
+              <input type="file" name="file" ng-model="group.image" accept="image/*" maxsize="200" base-sixty-four-input>
+              <span ng-show="groupform.file.$error.maxsize">Files must not exceed 200 KB</span>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-mousedown="createGroup()">Save changes</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-disabled="groupform.file.$error.maxsize" ng-mousedown="createGroup()">Save changes</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

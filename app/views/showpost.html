@@ -11,11 +11,11 @@
       </div>
       <div>
         <span>
-          submitted by
-          <a ng-href="#/users/{{ post.creatorUID }}">
-            {{ post.creator }}
-          </a>
-        </span> 
+          submitted by <a ng-href="#/users/{{ post.creatorUID }}">{{ post.creator }}</a>
+        </span>
+        <span ng-repeat="(key, group) in post.group">
+          <span>to <a ng-href="#/group/{{ key }}">{{ group.name }}</a></span>
+        </span>
         <span ng-show="user.uid === post.creatorUID">&mdash;</span>
         <a ng-click="deletePostView(post)" ng-show="user.uid === post.creatorUID">delete</a>
       </div>

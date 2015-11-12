@@ -1,0 +1,53 @@
+<div class="profile">
+  <div class="row" ng-if="group.creator">
+    <div class="col-xs-4 col-sm-1" ng-if="group.image">
+      <img ng-src="data:{{ group.image.filetype }};base64,{{ group.image.base64 }}" class="img-rounded img-responsive" alt="Responsive image" style="height:80px" />
+    </div>
+    <div class="col-xs-4 col-sm-1" ng-if="!group.image">
+      <img ng-src="{{ user.profile.profileImageURL }}" class="img-rounded img-responsive" alt="Responsive image" />
+    </div>
+    <div class="row">
+      <div class="col-sm-10">
+        <span class="name">
+          {{ group.name }}
+        </span>
+      </div>
+      <div class="col-sm-10">
+        <span class="text-left">
+          created by <a ng-href="#/users/{{ group.creatorUID }}">{{ group.creator }}</a>
+        </span>
+      </div>
+      <div class="col-sm-10">
+        <span class="text-left">
+          {{group.date | date:"medium"}}
+        </span>
+      </div>
+    </div>
+  </div><br />
+
+  <div class="panel panel-default">
+    <div class="panel-body  row" ng-repeat="(key, post) in group.posts">
+      <div class="col-xs-1">
+      </div>
+      <div class="col-md-11 col-xs-11">
+        <div class="info">
+          <a ng-href="{{ post.url }}">
+            {{ post.title }}
+            <span class="url">({{ post.url | hostnameFromUrl }})</span>
+          </a>
+        </div>
+        <div>
+          <span>
+            submitted by <a ng-href="#/users/{{ post.creatorUID }}">{{ post.creator }}</a>
+          </span>
+          &mdash; 
+          <a ng-href="#/posts/{{ key }}">comments</a>
+          <span ng-show="user.uid === post.creatorUID">&mdash;</span>
+          <a ng-click="deletePost(key, post)" ng-show="user.uid === post.creatorUID">delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div><br />
+<a ng-href="#/posts">Back to Posts</a>

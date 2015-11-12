@@ -7,7 +7,8 @@
 </div>
 
 <div class="panel panel-default">
-  <div class="panel-body row" ng-repeat="post in posts | filter:query | orderBy:'date':true">
+  <div class="panel-body row" ng-repeat="post in posts | filter:query | orderBy:'date':true" 
+  ng-if="!post.group || (post.group && user.uid === post.creatorUID)">
     <div class="col-xs-1">
     </div>
     <div class="col-md-11 col-xs-11">
@@ -19,6 +20,9 @@
       </div>
       <div>
         <span>submitted by <a ng-href="#/users/{{ post.creatorUID }}">{{ post.creator }}</a></span>
+        <span ng-repeat="(key, group) in post.group">
+          <span>to <a ng-href="#/group/{{ key }}">{{ group.name }}</a></span>
+        </span>
         &mdash;
         <a ng-href="#/posts/{{ post.$id }}">comments</a>
         <span ng-show="user.uid === post.creatorUID">&mdash;</span>

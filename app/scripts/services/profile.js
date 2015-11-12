@@ -21,6 +21,9 @@ app.factory('Profile', function (FIREBASE_URL, $firebaseObject, $firebaseArray, 
       });
 
       return defer.promise;
+    },
+    getGroup: function(userId, groupId) {
+      return $firebaseObject(ref.child("profiles").child(userId).child("groups").child(groupId));
     }
   };
 

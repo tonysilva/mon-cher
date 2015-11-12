@@ -19,7 +19,8 @@ var app = angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'firebase'
+    'firebase',
+    'naif.base64'
   ])
   .constant('FIREBASE_URL', 'https://radiant-fire-9860.firebaseio.com/')
   .config(function ($routeProvider) {
@@ -53,6 +54,17 @@ var app = angular
       .when('/users/:userId', {
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl'
+      })
+      .when('/group/:groupId', {
+        templateUrl: 'views/group.html',
+        controller: 'GroupCtrl',
+        resolve: {
+          signedIn: function(Auth, $location){
+            if (!Auth.signedIn()) {
+              $location.path("/login");
+            }
+          }
+        }
       })
       .otherwise({
         redirectTo: '/'
