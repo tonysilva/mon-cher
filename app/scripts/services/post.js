@@ -43,16 +43,18 @@ app.factory('Post', function ($firebaseArray, $firebaseObject, $firebaseUtils, F
       return $firebaseArray(ref.child("comments").child(postId));
     },
     addComment: function (post, commentId, comment) {
-      ref.child("posts").child(post.$id).child("comments").child(commentId).set(comment);
-      Post.get(post.$id).$loaded().then(function(postRef) {
-        delete postRef.group;
-        var groupId = Object.keys(post.group)[0];
-        ref.child("groups").child(groupId).child("posts").child(postRef.$id).set($firebaseUtils.toJSON(postRef));
-        Group.get(groupId).$loaded().then(function(groupRef) {
-          delete groupRef.profiles;
-          ref.child("profiles").child(post.creatorUID).child("groups").child(groupRef.$id).set($firebaseUtils.toJSON(groupRef));
+      ref.child("posts").child(post.$id).child("comments").push(comment);
+      if (post.group) {
+        Post.get(post.$id).$loaded().then(function(postRef) {
+          delete postRef.group;
+          var groupId = Object.keys(post.group)[0];
+          ref.child("groups").child(groupId).child("posts").child(postRef.$id).set($firebaseUtils.toJSON(postRef));
+          Group.get(groupId).$loaded().then(function(groupRef) {
+            delete groupRef.profiles;
+            ref.child("profiles").child(post.creatorUID).child("groups").child(groupRef.$id).set($firebaseUtils.toJSON(groupRef));
+          });
         });
-      });
+      }
     },
     deletePostView: function (post) {
       var creatorUID = post.creatorUID;

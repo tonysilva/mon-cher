@@ -18,4 +18,12 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
     }
   };
 
+  $scope.commentsLength = function (post) {
+    var commentList = post.comments;
+    if (commentList) {
+      return Object.keys(commentList).length;
+    }
+    return 0; 
+  };
+
 });

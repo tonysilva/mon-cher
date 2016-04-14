@@ -24,7 +24,7 @@
           <span>to <a ng-href="#/group/{{ key }}">{{ group.name }}</a></span>
         </span>
         &mdash;
-        <a ng-href="#/posts/{{ post.$id }}"><span class="badge"><small>14</small></span> comments</a>
+        <a ng-href="#/posts/{{ post.$id }}"><span class="badge"><small>{{ commentsLength(post) }}</small></span> comments</a>
         <span ng-show="user.uid === post.creatorUID">&mdash;</span>
         <a ng-click="deletePost(post)" ng-show="user.uid === post.creatorUID">delete</a>
       </div>
