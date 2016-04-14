@@ -4,7 +4,7 @@ app.controller('NavCtrl', function ($scope, $location, Post, Auth, Group) {
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
   $scope.user = Auth.user;
-  $scope.post = {url: 'http://', title: ''};
+  $scope.post = {url: '', title: ''};
 
   $scope.submitPost = function (groupId) {
   	$scope.post.creator = $scope.user.profile.username;

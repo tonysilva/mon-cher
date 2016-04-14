@@ -2,12 +2,15 @@
 
   <h2>Sign Up</h2>
 
-  <form ng-submit="register()">
+  <form name="registerForm" ng-submit="register()">
   	<p ng-show="error" class="text-danger">{{ error }}</p>
-  	<input type="text" ng-model="user.username" placeholder="Username" class="form-control" maxlength="10"><br>
-    <input type="email" ng-model="user.email" placeholder="Email" class="form-control"><br>
-    <input type="password" ng-model="user.password" placeholder="Password" class="form-control"><br>
-    <input type="submit" value="Sign up" class="btn btn-primary" />
+  	<input type="text" ng-model="user.username" pattern="^[^\s]*$" required ng-trim="false" placeholder="Username (max 10 characters)" class="form-control" maxlength="10">
+  	<div class="has-error">
+  		<span class="control-label" ng-show="registerForm.$error.pattern">Single word only!</span><br>
+  	</div>
+    <input type="email" ng-model="user.email" required placeholder="Email" class="form-control"><br>
+    <input type="password" ng-model="user.password" required placeholder="Password" class="form-control"><br>
+    <input type="submit" ng-disabled="registerForm.$error.pattern || registerForm.$error.required" value="Sign up" class="btn btn-primary" />
   </form>
 
 </div>
