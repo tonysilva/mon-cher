@@ -180,6 +180,12 @@ input#search {
   bottom: 0;
 }
 
+.icons-footer {
+  font-weight: normal;
+  line-height: 1;
+  color: #777777;
+}
+
 /* LOADER CSS */
 
 .overlay-loader {
