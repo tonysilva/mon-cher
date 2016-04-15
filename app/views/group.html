@@ -43,7 +43,7 @@
           &mdash; 
           <a ng-href="#/posts/{{ key }}">comments</a>
           <span ng-show="user.uid === post.creatorUID">&mdash;</span>
-          <a ng-click="deletePost(key, post)" ng-show="user.uid === post.creatorUID">delete</a>
+          <a ng-click="deletePost(key, post)" ng-show="user.uid === post.creatorUID" style="cursor:pointer">delete</a>
         </div>
       </div>
     </div>
